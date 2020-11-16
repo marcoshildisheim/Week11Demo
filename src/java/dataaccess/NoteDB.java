@@ -6,82 +6,107 @@ import javax.persistence.EntityTransaction;
 import models.Note;
 import models.User;
 
-public class NoteDB {
-
-    public List<Note> getAll(String owner) throws Exception {
+public class NoteDB 
+{
+    public List<Note> getAll(String owner) throws Exception 
+    {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
-        try {
+        try 
+        {
             User user = em.find(User.class, owner);
             return user.getNoteList();
-        } finally {
+        } 
+        finally 
+        {
             em.close();
         }
     }
 
-    public Note get(int noteId) throws Exception {
+    public Note get(int noteId) throws Exception 
+    {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
-        try {
+        try 
+        {
             Note note = em.find(Note.class, noteId);
             // System.out.println("first name: " + note.getOwner().getFirstName());
             // get all notes of the same owner as that note
             // List<Note> notes = note.getOwner().getNoteList();
             return note;
-        } finally { 
+        } 
+        finally 
+        { 
             em.close();
         }
     }
 
-    public void insert(Note note) throws Exception {
+    public void insert(Note note) throws Exception 
+    {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         
-        try {
+        try 
+        {
             User user = note.getOwner();
             user.getNoteList().add(note);
             trans.begin();
             em.persist(note);
             em.merge(user);
             trans.commit();
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             trans.rollback();
-        } finally {
+        } 
+        finally 
+        {
             em.close();
         }
     }
 
-    public void update(Note note) throws Exception {
+    public void update(Note note) throws Exception 
+    
+    {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         
-        try {
+        try 
+        {
             trans.begin();
             em.merge(note);
             trans.commit();
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             trans.rollback();
-        } finally {
+        } finally 
+        {
             em.close();
         }
     }
 
-    public void delete(Note note) throws Exception {
+    public void delete(Note note) throws Exception 
+    {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         
-        try {
+        try 
+        {
             User user = note.getOwner();
             user.getNoteList().remove(note);
             trans.begin();
             em.remove(em.merge(note));
             em.merge(user);
             trans.commit();
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             trans.rollback();
-        } finally {
+        } 
+        finally 
+        {
             em.close();
         }
     }
-
 }

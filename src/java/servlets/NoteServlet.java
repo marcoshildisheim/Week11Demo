@@ -12,42 +12,49 @@ import javax.servlet.http.HttpSession;
 import models.Note;
 import services.NoteService;
 
-public class NoteServlet extends HttpServlet {
+public class NoteServlet extends HttpServlet 
+{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException 
+    {
         NoteService ns = new NoteService();
 
-        try {
+        try 
+        {
             HttpSession session = request.getSession();
             String email = (String) session.getAttribute("email");
             List<Note> notes = ns.getAll(email);
             request.setAttribute("notes", notes);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", "error");
         }
 
         String action = request.getParameter("action");
-        if (action != null && action.equals("view")) {
-            try {
+        if (action != null && action.equals("view")) 
+        {
+            try 
+            {
                 int id = Integer.parseInt(request.getParameter("noteId"));
                 Note note = ns.get(id);
                 request.setAttribute("selectedNote", note);
-            } catch (Exception ex) {
+            } 
+            catch (Exception ex) 
+            {
                 Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
         getServletContext().getRequestDispatcher("/WEB-INF/notes.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException 
+    {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("email");
 
@@ -59,8 +66,10 @@ public class NoteServlet extends HttpServlet {
         String title = request.getParameter("title");
         String contents = request.getParameter("contents");
 
-        try {
-            switch (action) {
+        try 
+        {
+            switch (action) 
+            {
                 case "create":
                     ns.insert(title, contents, email);
                     break;
@@ -71,20 +80,23 @@ public class NoteServlet extends HttpServlet {
                     ns.delete(Integer.parseInt(noteId));
             }
             request.setAttribute("message", action);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", "error");
         }
 
-        try {
+        try 
+        {
             List<Note> notes = ns.getAll(email);
             request.setAttribute("notes", notes);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", "error");
         }
-
         getServletContext().getRequestDispatcher("/WEB-INF/notes.jsp").forward(request, response);
     }
-
 }

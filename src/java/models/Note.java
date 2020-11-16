@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
 
 import java.io.Serializable;
@@ -32,8 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Note.findByNoteId", query = "SELECT n FROM Note n WHERE n.noteId = :noteId")
     , @NamedQuery(name = "Note.findByTitle", query = "SELECT n FROM Note n WHERE n.title = :title")
     , @NamedQuery(name = "Note.findByContents", query = "SELECT n FROM Note n WHERE n.contents = :contents")})
-public class Note implements Serializable {
 
+public class Note implements Serializable 
+{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,74 +46,89 @@ public class Note implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User owner;
 
-    public Note() {
+    public Note() 
+    {
     }
 
-    public Note(Integer noteId) {
+    public Note(Integer noteId) 
+    {
         this.noteId = noteId;
     }
 
-    public Note(Integer noteId, String title, String contents) {
+    public Note(Integer noteId, String title, String contents) 
+    {
         this.noteId = noteId;
         this.title = title;
         this.contents = contents;
     }
 
-    public Integer getNoteId() {
+    public Integer getNoteId() 
+    {
         return noteId;
     }
 
-    public void setNoteId(Integer noteId) {
+    public void setNoteId(Integer noteId) 
+    {
         this.noteId = noteId;
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title) 
+    {
         this.title = title;
     }
 
-    public String getContents() {
+    public String getContents()
+    {
         return contents;
     }
 
-    public void setContents(String contents) {
+    public void setContents(String contents) 
+    {
         this.contents = contents;
     }
 
-    public User getOwner() {
+    public User getOwner() 
+    {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(User owner) 
+    {
         this.owner = owner;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         int hash = 0;
         hash += (noteId != null ? noteId.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object) 
+    {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Note)) {
+        if (!(object instanceof Note)) 
+        {
             return false;
         }
         Note other = (Note) object;
-        if ((this.noteId == null && other.noteId != null) || (this.noteId != null && !this.noteId.equals(other.noteId))) {
+        if ((this.noteId == null && other.noteId != null) || (this.noteId != null && !this.noteId.equals(other.noteId))) 
+        {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         return "models.Note[ noteId=" + noteId + " ]";
-    }
-    
+    }  
 }
