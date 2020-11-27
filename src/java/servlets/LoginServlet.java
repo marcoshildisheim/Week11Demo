@@ -29,7 +29,8 @@ public class LoginServlet extends HttpServlet
         String password = request.getParameter("password");
         
         AccountService as = new AccountService();
-        User user = as.login(email, password);
+        String path = getServletContext().getRealPath("/WEB-INF");
+        User user = as.login(email, password, path);
         
         if (user == null) 
         {
